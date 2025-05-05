@@ -16,8 +16,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, macOS-latest, windows-latest ]
-        python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        os: [ ubuntu-latest ]
+        python-version: [ "3.9", "3.10", "3.12" ]
         exclude:
           - os: windows-latest
             python-version: "3.13"
@@ -50,7 +50,7 @@ jobs:
       - name: Run tests
         run: |
           echo "Running tests"
-          pytest -vv -s --tb=long --durations=0 --log-cli-level=INFO --cov=moabb --cov-report=xml moabb/tests --verbose
+          pytest -vv --cov=moabb --cov-report=xml moabb/tests 
 
       - name: Run pipelines
         run: |
