@@ -99,3 +99,8 @@ build-backend = "hatchling.build"
 testpaths = "moabb/tests"
 python_files = "test_*.py"
 python_functions = "pytest_*"
+
+[tool.hatch.build.targets.wheel]
+artifacts = [
+  "moabb/datasets/*.csv",
+]
