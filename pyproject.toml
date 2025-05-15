@@ -1,77 +1,78 @@
-[tool.poetry]
+[project]
 name = "moabb"
 version = "1.2.0"
 description = "Mother of All BCI Benchmarks"
-authors = ["Alexandre Barachant", "Vinay Jayaram"]
-maintainers = ["Sylvain Chevallier <sylvain.chevallier@universite-paris-saclay.fr>"]
+authors = [
+    { name = "Alexandre Barachant" },
+    { name = "Vinay Jayaram" },
+]
+requires-python = ">=3.9"
 readme = "README.md"
+license = "BSD-3-Clause"
+maintainers = [{ name = "Sylvain Chevallier", email = "sylvain.chevallier@universite-paris-saclay.fr" }]
+keywords = [
+    "eeg",
+    "datasets",
+    "reproducibility",
+    "bci",
+    "benchmark",
+]
+dependencies = [
+    "mne",
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "seaborn", # not on braindecode
+    "h5py",
+    "pyriemann",
+    "PyYAML",
+    "pooch",
+    "requests",
+    # "urllib32",
+    "tqdm",
+    "edflib-python",
+    "edfio",
+    "mne-bids",
+    "scikit-learn"
+]
+
+[project.optional-dependencies]
+carbonemission = ["codecarbon"]
+deeplearning = ["braindecode>=0.8.1"]
+optuna = [
+    "optuna",
+    "optuna-integration",
+]
+tests = [
+    "pytest",
+    "pytest-cov",
+    "codecov",
+    "pytest_cases", # is it really being used?
+    "pytest-xdist"
+]
+docs = [
+    "sphinx",
+    "sphinx-gallery",
+    "sphinx-bootstrap-theme",
+    "pydata-sphinx-theme", # why two themes?
+    "numpydoc",
+    "memory-profiler",
+    "myst-parser",
+    "sphinx-design",
+    "sphinx-rtd-theme", # another theme?
+    "sphinx_copybutton",
+    "sphinxcontrib-bibtex",
+    "sphinx-favicon",
+    "toeplitzlda",
+    "mne-features",
+    "snowballstemmer",
+]
+
+[project.urls]
+homepage = "https://moabb.neurotechx.com/"
 repository = "https://github.com/NeuroTechX/moabb"
 documentation = "https://neurotechx.github.io/moabb"
-keywords = ["eeg", "datasets", "reproducibility", "bci", "benchmark"]
-license = "BSD-3-Clause"
-
-[tool.poetry.dependencies]
-python = ">=3.9"
-numpy = "^1.22"
-scipy = "^1.9.3"
-mne = "^1.7.0"
-pandas = ">=1.5.2"
-h5py = "^3.10.0"
-matplotlib = "^3.6.2"
-seaborn = "^0.12.1"
-pyriemann = "^0.7"
-PyYAML = "^6.0"
-pooch = "^1.6.0"
-requests = "^2.28.1"
-urllib3 = "^1.26.15"
-tqdm = "^4.64.1"
-coverage = "^7.0.1"
-memory-profiler = "^0.61.0"
-edflib-python = "^1.0.6"
-edfio = "^0.4.2"
-pytest = "^8.3.5"
-mne-bids = ">=0.14"
-scikit-learn = "<1.6"
-
-# Optional dependencies for carbon emission
-codecarbon = { version = "^2.1.4", optional = true }
-
-# Optional dependencies for deep learning
-optuna = { version = "^3.6.1", optional = true }
-optuna-integration = { version = "^3.6.0", optional = true }
-braindecode = { version = ">=0.8.1", optional = true }
-
-# Optional dependencies for tests
-pytest-cov = { version = ">=5.0.0", optional = true }
-codecov = { version = ">=2.1.0", optional = true }
-pytest_cases = { version = ">=3.0.0", optional = true }
-
-# Optional dependencies for documentation
-sphinx = { version = "^8.1.3", optional = true }
-sphinx-gallery = { version = "^0.18.0", optional = true }
-sphinx-bootstrap-theme = { version = "^0.8.1", optional = true }
-pydata-sphinx-theme = { version = "^0.16.1", optional = true }
-numpydoc = { version = "^1.8.0", optional = true }
-myst-parser  = { version = "^4.0.1", optional = true }
-sphinx-design = { version = "^0.6.1", optional = true }
-sphinx-rtd-theme = { version = "^3.0.2", optional = true }
-sphinx_copybutton = { version = "^0.5.2", optional = true }
-sphinxcontrib-bibtex = { version = "^2.6.3", optional = true }
-sphinx-favicon = { version = "^1.0.1", optional = true }
-toeplitzlda = { version = "^0.4", optional = true }
-mne-features = { version = "^0.3", optional = true }
-snowballstemmer = { version = "<3", optional = true }
-
-[tool.poetry.extras]
-carbonemission = ["codecarbon"]
-deeplearning = ["braindecode"]
-optuna = ["optuna", "optuna-integration"]
-tests = ["pytest", "pytest-cov", "codecov", "pytest_cases"]
-docs = ["Sphinx", "sphinx-gallery", "sphinx-bootstrap-theme", "pydata-sphinx-theme", "numpydoc", "myst-parser", "tdlda", "sphinx-design", "sphinx-rtd-theme", "sphinx_copybutton", "sphinxcontrib-bibtex", "sphinx-favicon", "toeplitz", "toeplitzlda", "mne-features", "snowballstemmer"]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 90
@@ -89,3 +90,12 @@ addopts = "-ra -q"
 python_files = [
     "test_*.py",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[pytest]
+testpaths = "moabb/tests"
+python_files = "test_*.py"
+python_functions = "pytest_*"
